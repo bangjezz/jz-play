@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090f">
+  <title>JZ PLAY — Movie Website</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #09090f;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      padding: 20px;
+      background: #12121b;
+      border-bottom: 1px solid #292938;
+    }
+    .logo {
+      font-size: 26px;
+      font-weight: 800;
+      color: #a78bfa;
+    }
+    .wrap {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+    .search {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #39394b;
+      border-radius: 10px;
+      background: #171722;
+      color: white;
+      font-size: 16px;
+    }
+    h1 { font-size: 24px; }
+    #status { color: #b7b7c9; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 15px;
+    }
+    .movie {
+      overflow: hidden;
+      border: 1px solid #292938;
+      border-radius: 12px;
+      background: #14141e;
+    }
+    .movie img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 2/3;
+      object-fit: cover;
+      background: #242434;
+    }
+    .movie h3 {
+      padding: 0 10px;
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
+    .empty { color: #aaaabd; }
+    footer {
+      padding: 25px;
+      text-align: center;
+      color: #88889c;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">JZ PLAY</div>
+    <small>Movie website</small>
+  </header>
+
+  <main class="wrap">
+    <h1>Katalog Video</h1>
+    <input id="search" class="search"
+      placeholder="Cari judul video..."
+      aria-label="Cari judul video">
+    <p id="status">Memuat katalog...</p>
+    <section id="movies" class="grid"></section>
+  </main>
+
+  <footer>JZ PLAY · Movie Website</footer>
+
+  <script>
+    const PROJECT_URL =
+      "https://hinxtbzzavdnabtukaqw.supabase.co";
+
+    const PUBLISHABLE_KEY = "sb_publishable_2HTAulFHCy0L7ix7NQvLKw_W0BnuTM-";
+
+    const movies = document.getElementById("movies");
+    const status = document.getElementById("status");
+    const search = document.getElementById("search");
+    let data = [];
+
+    function render() {
+      const q = search.value.toLowerCase().trim();
+      const filtered = data.filter(v =>
+        (v.title || "").toLowerCase().includes(q)
+      );
+
+      movies.replaceChildren();
+
+      filtered.forEach(v => {
+        const card = document.createElement("article");
+        card.className = "movie";
+
+        if (v.thumbnail_url) {
+          const img = document.createElement("img");
+          img.src = v.thumbnail_url;
+          img.alt = v.title || "Video";
+          img.loading = "lazy";
+          card.appendChild(img);
+        }
+
+        const title = document.createElement("h3");
+        title.textContent = v.title;
+        card.appendChild(title);
+        movies.appendChild(card);
+      });
+
+      if (!filtered.length) {
+        status.textContent = data.length
+          ? "Video tidak ditemukan."
+          : "Belum ada video di katalog.";
+      } else {
+        status.textContent = filtered.length + " video ditemukan.";
+      }
+    }
+
+    async function loadVideos() {
+      try {
+        const response = await fetch(
+          PROJECT_URL + "/rest/v1/videos?select=id,title,description,thumbnail_url,video_url,created_at&order=created_at.desc",
+          {
+            headers: {
+              apikey: PUBLISHABLE_KEY,
+              Authorization: "Bearer " + PUBLISHABLE_KEY
+            }
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("HTTP " + response.status);
+        }
+
+        data = await response.json();
+        render();
+      } catch (error) {
+        status.textContent =
+          "Katalog gagal dimuat. Periksa konfigurasi Supabase.";
+        console.error(error);
+      }
+    }
+
+    search.addEventListener("input", render);
+    loadVideos();
+  </script>
+</body>
+  </html>
