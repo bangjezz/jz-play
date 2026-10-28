@@ -3,141 +3,170 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#09090f">
-  <title>JZ PLAY — Movie Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JZ PLAY</title>
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: #09090f;
-      color: #f5f5f5;
+      background: #080808;
+      color: white;
       font-family: Arial, sans-serif;
     }
     header {
-      padding: 20px;
-      background: #12121b;
-      border-bottom: 1px solid #292938;
+      padding: 18px 16px;
+      background: #111;
+      border-bottom: 1px solid #292929;
+      position: sticky;
+      top: 0;
+      z-index: 2;
     }
-    .logo {
-      font-size: 26px;
-      font-weight: 800;
-      color: #a78bfa;
-    }
-    .wrap {
-      max-width: 1000px;
-      margin: auto;
-      padding: 20px;
-    }
-    .search {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #39394b;
-      border-radius: 10px;
-      background: #171722;
-      color: white;
-      font-size: 16px;
-    }
-    h1 { font-size: 24px; }
-    #status { color: #b7b7c9; }
-    .grid {
+    .logo { color: #ff3030; font-size: 25px; font-weight: bold; }
+    .subtitle { color: #aaa; font-size: 12px; margin-top: 5px; }
+    main { padding: 16px; }
+    h2 { font-size: 18px; margin: 4px 0 16px; }
+    #videos {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
     }
-    .movie {
+    .card {
+      background: #171717;
+      border: 1px solid #292929;
+      border-radius: 10px;
       overflow: hidden;
-      border: 1px solid #292938;
-      border-radius: 12px;
-      background: #14141e;
     }
-    .movie img {
-      display: block;
+    .poster {
       width: 100%;
-      aspect-ratio: 2/3;
+      aspect-ratio: 3 / 4;
       object-fit: cover;
-      background: #242434;
+      display: block;
+      background: #222;
     }
-    .movie h3 {
-      padding: 0 10px;
-      font-size: 15px;
+    .info { padding: 10px; }
+    .title {
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 0 0 8px;
       overflow-wrap: anywhere;
     }
-    .empty { color: #aaaabd; }
+    .description {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: 0;
+      border-radius: 6px;
+      background: #f22;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #status { color: #aaa; font-size: 14px; margin: 16px 0; }
+    #player {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 5;
+      padding: 16px;
+    }
+    .player-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    #playerTitle { font-size: 16px; }
+    #closePlayer { width: auto; padding: 9px 14px; }
+    #frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 0;
+      background: #111;
+    }
     footer {
-      padding: 25px;
+      color: #777;
+      font-size: 12px;
       text-align: center;
-      color: #88889c;
+      padding: 24px 12px;
+    }
+    @media (min-width: 700px) {
+      #videos { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
   </style>
 </head>
 <body>
   <header>
     <div class="logo">JZ PLAY</div>
-    <small>Movie website</small>
+    <div class="subtitle">Tempat menonton video favoritmu</div>
   </header>
 
-  <main class="wrap">
-    <h1>Katalog Video</h1>
-    <input id="search" class="search"
-      placeholder="Cari judul video..."
-      aria-label="Cari judul video">
-    <p id="status">Memuat katalog...</p>
-    <section id="movies" class="grid"></section>
+  <main>
+    <h2>Video Terbaru</h2>
+    <div id="status">Memuat daftar video...</div>
+    <div id="videos"></div>
   </main>
 
-  <footer>JZ PLAY · Movie Website</footer>
+  <div id="player">
+    <div class="player-top">
+      <div id="playerTitle">Pemutar video</div>
+      <button id="closePlayer" type="button">Tutup ✕</button>
+    </div>
+    <iframe id="frame" allowfullscreen
+      allow="autoplay; fullscreen; picture-in-picture"
+      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+
+  <footer>JZ PLAY · Video yang diunggah harus milikmu
+    atau memiliki izin untuk ditayangkan.</footer>
 
   <script>
-    const PROJECT_URL =
-      "https://hinxtbzzavdnabtukaqw.supabase.co";
+    const PROJECT_URL = "https://hinxtbzzavdnabtukaqw.supabase.co";
 
+    // Masukkan Supabase publishable key milikmu di antara tanda kutip.
+    // Jangan pernah memasukkan secret/service_role key ke website publik.
     const PUBLISHABLE_KEY = "sb_publishable_2HTAulFHCy0L7ix7NQvLKw_W0BnuTM-";
 
-    const movies = document.getElementById("movies");
-    const status = document.getElementById("status");
-    const search = document.getElementById("search");
-    let data = [];
+    const videosBox = document.getElementById("videos");
+    const statusBox = document.getElementById("status");
+    const player = document.getElementById("player");
+    const frame = document.getElementById("frame");
 
-    function render() {
-      const q = search.value.toLowerCase().trim();
-      const filtered = data.filter(v =>
-        (v.title || "").toLowerCase().includes(q)
-      );
-
-      movies.replaceChildren();
-
-      filtered.forEach(v => {
-        const card = document.createElement("article");
-        card.className = "movie";
-
-        if (v.thumbnail_url) {
-          const img = document.createElement("img");
-          img.src = v.thumbnail_url;
-          img.alt = v.title || "Video";
-          img.loading = "lazy";
-          card.appendChild(img);
-        }
-
-        const title = document.createElement("h3");
-        title.textContent = v.title;
-        card.appendChild(title);
-        movies.appendChild(card);
-      });
-
-      if (!filtered.length) {
-        status.textContent = data.length
-          ? "Video tidak ditemukan."
-          : "Belum ada video di katalog.";
-      } else {
-        status.textContent = filtered.length + " video ditemukan.";
+    function openVideo(video) {
+      let url;
+      try {
+        url = new URL(video.video_url);
+      } catch {
+        alert("Link video belum benar.");
+        return;
       }
+
+      if (url.protocol !== "https:") {
+        alert("Link video harus menggunakan HTTPS.");
+        return;
+      }
+
+      // Gunakan link embed dari penyedia video yang kamu gunakan.
+      frame.src = url.href;
+      document.getElementById("playerTitle").textContent = video.title || "Video";
+      player.style.display = "block";
     }
+
+    document.getElementById("closePlayer").onclick = () => {
+      frame.src = "about:blank";
+      player.style.display = "none";
+    };
 
     async function loadVideos() {
       try {
         const response = await fetch(
-          PROJECT_URL + "/rest/v1/videos?select=id,title,description,thumbnail_url,video_url,created_at&order=created_at.desc",
+          PROJECT_URL +
+          "/rest/v1/videos?select=id,title,description,thumbnail_url,video_url,created_at&order=created_at.desc",
           {
             headers: {
               apikey: PUBLISHABLE_KEY,
@@ -150,16 +179,63 @@
           throw new Error("HTTP " + response.status);
         }
 
-        data = await response.json();
-        render();
+        const videos = await response.json();
+        videosBox.replaceChildren();
+
+        if (!videos.length) {
+          statusBox.textContent = "Belum ada video. Tambahkan video melalui Supabase.";
+          return;
+        }
+
+        statusBox.textContent = "";
+
+        videos.forEach(video => {
+          const card = document.createElement("article");
+          card.className = "card";
+
+          if (video.thumbnail_url) {
+            const img = document.createElement("img");
+            img.className = "poster";
+            img.src = video.thumbnail_url;
+            img.alt = video.title || "Poster video";
+            img.loading = "lazy";
+            card.appendChild(img);
+          } else {
+            const placeholder = document.createElement("div");
+            placeholder.className = "poster";
+            placeholder.style.display = "grid";
+            placeholder.style.placeItems = "center";
+            placeholder.textContent = "JZ PLAY";
+            card.appendChild(placeholder);
+          }
+
+          const info = document.createElement("div");
+          info.className = "info";
+
+          const title = document.createElement("h3");
+          title.className = "title";
+          title.textContent = video.title || "Tanpa judul";
+
+          const description = document.createElement("div");
+          description.className = "description";
+          description.textContent = video.description || "";
+
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = "▶ Tonton";
+          button.onclick = () => openVideo(video);
+
+          info.append(title, description, button);
+          card.appendChild(info);
+          videosBox.appendChild(card);
+        });
       } catch (error) {
-        status.textContent =
-          "Katalog gagal dimuat. Periksa konfigurasi Supabase.";
+        statusBox.textContent =
+          "Gagal memuat video. Periksa publishable key dan pengaturan akses Supabase.";
         console.error(error);
       }
     }
 
-    search.addEventListener("input", render);
     loadVideos();
   </script>
 </body>
