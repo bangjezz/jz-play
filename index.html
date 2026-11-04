@@ -5,14 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JZ PLAY</title>
+
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       background: #080808;
       color: white;
       font-family: Arial, sans-serif;
     }
+
     header {
       padding: 18px 16px;
       background: #111;
@@ -21,41 +24,91 @@
       top: 0;
       z-index: 2;
     }
-    .logo { color: #ff3030; font-size: 25px; font-weight: bold; }
-    .subtitle { color: #aaa; font-size: 12px; margin-top: 5px; }
+
+    .logo {
+      color: #ff3030;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      color: #aaa;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
     main { padding: 16px; }
-    h2 { font-size: 18px; margin: 4px 0 16px; }
+
+    h2 {
+      font-size: 18px;
+      margin: 4px 0 16px;
+    }
+
+    #search {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: #171717;
+      color: white;
+      font-size: 14px;
+    }
+
     #videos {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
     }
+
     .card {
       background: #171717;
       border: 1px solid #292929;
       border-radius: 10px;
       overflow: hidden;
     }
+
     .poster {
       width: 100%;
       aspect-ratio: 3 / 4;
       object-fit: cover;
       display: block;
       background: #222;
+      cursor: pointer;
     }
+
+    .placeholder {
+      display: grid;
+      place-items: center;
+      color: #ff3030;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     .info { padding: 10px; }
+
     .title {
       font-size: 14px;
       line-height: 1.4;
       margin: 0 0 8px;
       overflow-wrap: anywhere;
     }
+
     .description {
       font-size: 12px;
       color: #aaa;
       margin-bottom: 10px;
+      overflow-wrap: anywhere;
     }
-    button {
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    button, .download {
+      display: block;
       width: 100%;
       padding: 10px;
       border: 0;
@@ -63,9 +116,36 @@
       background: #f22;
       color: white;
       font-weight: bold;
+      text-align: center;
+      text-decoration: none;
       cursor: pointer;
+      font-size: 13px;
     }
-    #status { color: #aaa; font-size: 14px; margin: 16px 0; }
+
+    .download { background: #333; }
+
+    #status {
+      color: #aaa;
+      font-size: 14px;
+      margin: 16px 0;
+    }
+
+    #pagination {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 22px 0;
+    }
+
+    #pagination button {
+      width: auto;
+      min-width: 38px;
+      background: #292929;
+    }
+
+    #pagination button.active { background: #f22; }
+
     #player {
       display: none;
       position: fixed;
@@ -73,7 +153,9 @@
       background: #000;
       z-index: 5;
       padding: 16px;
+      overflow-y: auto;
     }
+
     .player-top {
       display: flex;
       justify-content: space-between;
@@ -81,34 +163,46 @@
       gap: 12px;
       margin-bottom: 14px;
     }
+
     #playerTitle { font-size: 16px; }
-    #closePlayer { width: auto; padding: 9px 14px; }
+
+    #closePlayer {
+      width: auto;
+      padding: 9px 14px;
+    }
+
     #frame {
       width: 100%;
       aspect-ratio: 16 / 9;
       border: 0;
       background: #111;
     }
+
+    .ad-container {
+      width: 100%;
+      min-height: 100px;
+      margin: 16px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
     footer {
       color: #777;
       font-size: 12px;
       text-align: center;
       padding: 24px 12px;
     }
+
     @media (min-width: 700px) {
-      #videos { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      #videos {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
     }
-    .ad-container {
-  width: 100%;
-  min-height: 100px;
-  margin: 16px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-        }
   </style>
 </head>
+
 <body>
   <header>
     <div class="logo">JZ PLAY</div>
@@ -117,15 +211,47 @@
 
   <main>
     <h2>Video Terbaru</h2>
-    <div class="ad-container">
-  <script async="async"
-    data-cfasync="false"
-    src="https://bancadeltempoidea.org/21/d97c13de15c560f017d5d95845aa3c2b">
-  </script>
-  <div id="container-d97c13de15c560f017d5d95845aa3c2b"></div>
+
+    <!-- SLOT IKLAN 1: POPUNDER -->
+    <!-- Tempat penanda kode Popunder -->
+
+    <!-- SLOT IKLAN 2: POP-UP -->
+    <!-- Tempat penanda kode Pop-up -->
+
+    <!-- SLOT IKLAN 3: SMARTLINK -->
+    <!-- Tempat penanda kode SmartLink -->
+
+    <!-- SLOT IKLAN 4: MULTITAG -->
+    <!-- Tempat penanda kode Multitag -->
+
+    <!-- SLOT IKLAN 5: ADSTERRA BANNER -->
+    <div class="ad-container" id="adsterra-banner">
+      <script async="async"
+        data-cfasync="false"
+        src="https://bancadeltempoidea.org/21/d97c13de15c560f017d5d95845aa3c2b">
+      </script>
+      <div id="container-d97c13de15c560f017d5d95845aa3c2b"></div>
     </div>
+
+    <!-- SLOT IKLAN 6: MONETAG BANNER -->
+    <div class="ad-container" id="monetag-banner">
+      <script
+        src="https://quge5.com/88/tag.min.js"
+        data-zone="305426"
+        async
+        data-cfasync="false">
+      </script>
+    </div>
+
+    <input
+      id="search"
+      type="search"
+      placeholder="Cari judul video..."
+      autocomplete="off">
+
     <div id="status">Memuat daftar video...</div>
     <div id="videos"></div>
+    <div id="pagination"></div>
   </main>
 
   <div id="player">
@@ -133,28 +259,43 @@
       <div id="playerTitle">Pemutar video</div>
       <button id="closePlayer" type="button">Tutup ✕</button>
     </div>
-    <iframe id="frame" allowfullscreen
+
+    <iframe
+      id="frame"
+      allowfullscreen
       allow="autoplay; fullscreen; picture-in-picture"
-      referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      referrerpolicy="strict-origin-when-cross-origin">
+    </iframe>
   </div>
 
-  <footer>JZ PLAY · Video yang diunggah harus milikmu
-    atau memiliki izin untuk ditayangkan.</footer>
+  <footer>
+    JZ PLAY · Video yang diunggah harus milikmu
+    atau memiliki izin untuk ditayangkan.
+  </footer>
 
   <script>
-    const PROJECT_URL = "https://hinxtbzzavdnabtukaqw.supabase.co";
+    const PROJECT_URL =
+      "https://hinxtbzzavdnabtukaqw.supabase.co";
 
-    // Masukkan Supabase publishable key milikmu di antara tanda kutip.
-    // Jangan pernah memasukkan secret/service_role key ke website publik.
-    const PUBLISHABLE_KEY = "sb_publishable_2HTAulFHCy0L7ix7NQvLKw_W0BnuTM-";
+    const PUBLISHABLE_KEY =
+      "sb_publishable_2HTAulFHCy0L7ix7NQvLKw_W0BnuTM-";
 
     const videosBox = document.getElementById("videos");
     const statusBox = document.getElementById("status");
+    const pagination = document.getElementById("pagination");
+    const searchInput = document.getElementById("search");
     const player = document.getElementById("player");
     const frame = document.getElementById("frame");
 
+    const PER_PAGE = 8;
+
+    let allVideos = [];
+    let filteredVideos = [];
+    let currentPage = 1;
+
     function openVideo(video) {
       let url;
+
       try {
         url = new URL(video.video_url);
       } catch {
@@ -167,9 +308,10 @@
         return;
       }
 
-      // Gunakan link embed dari penyedia video yang kamu gunakan.
       frame.src = url.href;
-      document.getElementById("playerTitle").textContent = video.title || "Video";
+      document.getElementById("playerTitle").textContent =
+        video.title || "Video";
+
       player.style.display = "block";
     }
 
@@ -178,11 +320,132 @@
       player.style.display = "none";
     };
 
+    function renderVideos() {
+      videosBox.replaceChildren();
+      pagination.replaceChildren();
+
+      if (!filteredVideos.length) {
+        statusBox.textContent = "Video tidak ditemukan.";
+        return;
+      }
+
+      statusBox.textContent =
+        "Menampilkan " + filteredVideos.length + " video";
+
+      const start = (currentPage - 1) * PER_PAGE;
+      const pageVideos =
+        filteredVideos.slice(start, start + PER_PAGE);
+
+      pageVideos.forEach(video => {
+        const card = document.createElement("article");
+        card.className = "card";
+
+        if (video.thumbnail_url) {
+          const img = document.createElement("img");
+          img.className = "poster";
+          img.src = video.thumbnail_url;
+          img.alt = video.title || "Poster video";
+          img.loading = "lazy";
+          img.onerror = () => {
+            img.replaceWith(createPlaceholder(video));
+          };
+          img.onclick = () => openVideo(video);
+          card.appendChild(img);
+        } else {
+          card.appendChild(createPlaceholder(video));
+        }
+
+        const info = document.createElement("div");
+        info.className = "info";
+
+        const title = document.createElement("h3");
+        title.className = "title";
+        title.textContent = video.title || "Tanpa judul";
+
+        const description = document.createElement("div");
+        description.className = "description";
+        description.textContent = video.description || "";
+
+        const actions = document.createElement("div");
+        actions.className = "actions";
+
+        const watchButton = document.createElement("button");
+        watchButton.type = "button";
+        watchButton.textContent = "▶ Tonton";
+        watchButton.onclick = () => openVideo(video);
+
+        actions.appendChild(watchButton);
+
+        if (video.download_url) {
+          const download = document.createElement("a");
+          download.className = "download";
+          download.href = video.download_url;
+          download.target = "_blank";
+          download.rel = "noopener noreferrer";
+          download.textContent = "⬇ Download";
+          actions.appendChild(download);
+        }
+
+        info.append(title, description, actions);
+        card.appendChild(info);
+        videosBox.appendChild(card);
+      });
+
+      renderPagination();
+    }
+
+    function createPlaceholder(video) {
+      const placeholder = document.createElement("div");
+      placeholder.className = "poster placeholder";
+      placeholder.textContent = "JZ PLAY";
+      placeholder.onclick = () => openVideo(video);
+      return placeholder;
+    }
+
+    function renderPagination() {
+      const totalPages = Math.ceil(
+        filteredVideos.length / PER_PAGE
+      );
+
+      if (totalPages <= 1) return;
+
+      for (let page = 1; page <= totalPages; page++) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = page;
+
+        if (page === currentPage) {
+          button.classList.add("active");
+        }
+
+        button.onclick = () => {
+          currentPage = page;
+          renderVideos();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+
+        pagination.appendChild(button);
+      }
+    }
+
+    searchInput.addEventListener("input", () => {
+      const keyword = searchInput.value
+        .toLowerCase()
+        .trim();
+
+      filteredVideos = allVideos.filter(video =>
+        (video.title || "").toLowerCase().includes(keyword)
+      );
+
+      currentPage = 1;
+      renderVideos();
+    });
+
     async function loadVideos() {
       try {
         const response = await fetch(
           PROJECT_URL +
-          "/rest/v1/videos?select=id,title,description,thumbnail_url,video_url,created_at&order=created_at.desc",
+          "/rest/v1/videos?select=id,title,description,thumbnail_url,video_url,download_url,created_at&order=created_at.desc",
           {
             headers: {
               apikey: PUBLISHABLE_KEY,
@@ -195,59 +458,21 @@
           throw new Error("HTTP " + response.status);
         }
 
-        const videos = await response.json();
-        videosBox.replaceChildren();
+        allVideos = await response.json();
+        filteredVideos = [...allVideos];
 
-        if (!videos.length) {
-          statusBox.textContent = "Belum ada video. Tambahkan video melalui Supabase.";
-          return;
+        currentPage = 1;
+        renderVideos();
+
+        if (!allVideos.length) {
+          statusBox.textContent =
+            "Belum ada video. Tambahkan video melalui Supabase.";
         }
 
-        statusBox.textContent = "";
-
-        videos.forEach(video => {
-          const card = document.createElement("article");
-          card.className = "card";
-
-          if (video.thumbnail_url) {
-            const img = document.createElement("img");
-            img.className = "poster";
-            img.src = video.thumbnail_url;
-            img.alt = video.title || "Poster video";
-            img.loading = "lazy";
-            card.appendChild(img);
-          } else {
-            const placeholder = document.createElement("div");
-            placeholder.className = "poster";
-            placeholder.style.display = "grid";
-            placeholder.style.placeItems = "center";
-            placeholder.textContent = "JZ PLAY";
-            card.appendChild(placeholder);
-          }
-
-          const info = document.createElement("div");
-          info.className = "info";
-
-          const title = document.createElement("h3");
-          title.className = "title";
-          title.textContent = video.title || "Tanpa judul";
-
-          const description = document.createElement("div");
-          description.className = "description";
-          description.textContent = video.description || "";
-
-          const button = document.createElement("button");
-          button.type = "button";
-          button.textContent = "▶ Tonton";
-          button.onclick = () => openVideo(video);
-
-          info.append(title, description, button);
-          card.appendChild(info);
-          videosBox.appendChild(card);
-        });
       } catch (error) {
         statusBox.textContent =
           "Gagal memuat video. Periksa publishable key dan pengaturan akses Supabase.";
+
         console.error(error);
       }
     }
@@ -255,4 +480,4 @@
     loadVideos();
   </script>
 </body>
-  </html>
+</html>
