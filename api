@@ -1,1 +1,33 @@
+export default async function handler(req, res) {
+  const code = String(req.query.code || "");
+
+  if (!/^[a-zA-Z0-9]{12}$/.test(code)) {
+    return res.status(400).json({ error: "Kode video tidak valid" });
+  }
+
+  const key = process.env.DOODSTREAM_API_KEY;
+
+  if (!key) {
+    return res.status(500).json({ error: "API key belum diatur" });
+  }
+
+  try {
+    const url = new URL("https://doodapi.co/api/file/image");
+    url.searchParams.set("key", key);
+    url.searchParams.set("file_code", code);
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const thumbnail = data?.result?.[0]?.thumb_img;
+
+    if (!response.ok || !thumbnail) {
+      return res.status(404).json({ error: "Thumbnail tidak ditemukan" });
+    }
+
+    return res.status(200).json({ thumbnail });
+  } catch {
+    return res.status(500).json({ error: "Gagal mengambil thumbnail" });
+  }
+}
 
