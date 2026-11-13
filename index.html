@@ -2,633 +2,559 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080808">
-  <title>JZ PLAY - Nonton Video</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JZ PLAY - Video Hiburan</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    body {
-      background: #080808;
-      color: #fff;
-      font-family: Arial, sans-serif;
-    }
+body {
+  background: #080808;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
 
-    header {
-      background: #111;
-      border-bottom: 1px solid #252525;
-      padding: 17px 16px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+header {
+  background: #111;
+  padding: 18px 16px;
+  border-bottom: 1px solid #292929;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 
-    .header-inner {
-      max-width: 900px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
+.header-inner {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    .logo {
-      font-size: 25px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: #fff;
-    }
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+  color: #ff3030;
+  letter-spacing: 1px;
+}
 
-    .logo span {
-      color: #e50914;
-    }
+.logo span {
+  color: white;
+}
 
-    .tagline {
-      color: #999;
-      font-size: 11px;
-      margin-top: 3px;
-    }
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 16px;
+}
 
-    main {
-      width: 100%;
-      max-width: 900px;
-      margin: auto;
-      padding: 16px;
-    }
+.banner {
+  margin-bottom: 18px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 10px;
+}
 
-    .search-box {
-      margin: 8px 0 18px;
-    }
+.search-box {
+  width: 100%;
+  padding: 13px 15px;
+  margin-bottom: 20px;
+  background: #171717;
+  border: 1px solid #333;
+  border-radius: 9px;
+  color: white;
+  font-size: 15px;
+  outline: none;
+}
 
-    .search-box input {
-      width: 100%;
-      background: #171717;
-      color: white;
-      border: 1px solid #333;
-      border-radius: 9px;
-      padding: 14px;
-      font-size: 15px;
-      outline: none;
-    }
+.search-box:focus {
+  border-color: #ff3030;
+}
 
-    .search-box input:focus {
-      border-color: #e50914;
-    }
+.section-title {
+  font-size: 19px;
+  margin-bottom: 15px;
+}
 
-    .section-title {
-      font-size: 18px;
-      margin: 18px 0 14px;
-    }
+#videos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
 
-    .ad-box {
-      min-height: 60px;
-      width: 100%;
-      margin: 12px 0 18px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
+.video-card {
+  background: #141414;
+  border: 1px solid #292929;
+  border-radius: 12px;
+  overflow: hidden;
+}
 
-    #videos {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 22px;
-    }
+.video-title {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 13px 13px 8px;
+  line-height: 1.4;
+}
 
-    .video-card {
-      background: #121212;
-      border: 1px solid #252525;
-      border-radius: 12px;
-      overflow: hidden;
-    }
+.video-description {
+  color: #aaa;
+  font-size: 13px;
+  padding: 0 13px 12px;
+  line-height: 1.5;
+}
 
-    .video-frame {
-      width: 100%;
-      aspect-ratio: 9 / 16;
-      background: #000;
-      position: relative;
-      overflow: hidden;
-    }
+/* UKURAN VIDEO 4:5 */
+.video-frame {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: #000;
+  overflow: hidden;
+}
 
-    .video-frame iframe,
-    .video-frame video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-      border: 0;
-      background: #000;
-      object-fit: contain;
-    }
+.inline-video,
+.inline-embed {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: contain;
+  background: #000;
+}
 
-    .video-info {
-      padding: 13px;
-    }
+.video-actions {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+}
 
-    .video-title {
-      font-size: 16px;
-      font-weight: bold;
-      line-height: 1.4;
-      margin-bottom: 7px;
-      overflow-wrap: anywhere;
-    }
+.action-btn {
+  flex: 1;
+  text-align: center;
+  padding: 12px 8px;
+  background: #ff3030;
+  color: white;
+  text-decoration: none;
+  border: 0;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .video-description {
-      color: #aaa;
-      font-size: 13px;
-      line-height: 1.5;
-      margin-bottom: 12px;
-      overflow-wrap: anywhere;
-    }
+.download-btn {
+  background: #252525;
+  border: 1px solid #444;
+}
 
-    .actions {
-      display: flex;
-      gap: 9px;
-    }
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 25px 0;
+}
 
-    .actions a,
-    .actions button {
-      flex: 1;
-      border: 0;
-      border-radius: 7px;
-      padding: 11px 8px;
-      font-size: 13px;
-      font-weight: bold;
-      text-align: center;
-      text-decoration: none;
-      cursor: pointer;
-    }
+.page-btn {
+  padding: 10px 14px;
+  border: 1px solid #444;
+  background: #171717;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
-    .watch-btn {
-      background: #e50914;
-      color: white;
-    }
+.page-btn.active {
+  background: #ff3030;
+  border-color: #ff3030;
+}
 
-    .download-btn {
-      background: #292929;
-      color: white;
-    }
+.empty {
+  text-align: center;
+  color: #aaa;
+  padding: 35px 10px;
+}
 
-    .pagination {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 25px 0;
-    }
+footer {
+  color: #777;
+  text-align: center;
+  padding: 25px 10px;
+  font-size: 12px;
+  border-top: 1px solid #222;
+}
 
-    .pagination button {
-      background: #202020;
-      color: white;
-      border: 1px solid #333;
-      border-radius: 7px;
-      padding: 9px 13px;
-      cursor: pointer;
-    }
+/* PEMUTAR VIDEO */
+#player {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.97);
+  z-index: 100;
+  padding: 15px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
-    .pagination button.active {
-      background: #e50914;
-      border-color: #e50914;
-    }
+#player.show {
+  display: flex;
+}
 
-    .pagination button:disabled {
-      opacity: .4;
-      cursor: not-allowed;
-    }
+.player-top {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
 
-    .message {
-      text-align: center;
-      color: #aaa;
-      padding: 35px 10px;
-      line-height: 1.6;
-    }
+.close-player {
+  background: #ff3030;
+  border: 0;
+  color: white;
+  border-radius: 7px;
+  padding: 10px 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    footer {
-      text-align: center;
-      color: #777;
-      font-size: 12px;
-      padding: 25px 12px;
-      border-top: 1px solid #222;
-      margin-top: 25px;
-    }
+/* PEMUTAR 4:5 */
+#playerContent {
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 4 / 5;
+  background: #000;
+}
 
-    #player {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background: rgba(0,0,0,.96);
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-    }
+#playerContent iframe,
+#playerContent video {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: #000;
+}
 
-    #player.show {
-      display: flex;
-    }
+@media (min-width: 750px) {
+  #videos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
-    .player-content {
-      width: 100%;
-      max-width: 480px;
-    }
+  .video-frame {
+    max-height: 600px;
+  }
+}
+</style>
 
-    .player-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      gap: 10px;
-    }
+<!-- MONETAG BANNER -->
+<script async src="https://quge5.com/88/tag.min.js"
+data-zone="305426"></script>
 
-    #playerTitle {
-      font-size: 15px;
-      font-weight: bold;
-      overflow-wrap: anywhere;
-    }
-
-    #closePlayer {
-      background: #e50914;
-      color: white;
-      border: 0;
-      border-radius: 7px;
-      padding: 9px 13px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .player-screen {
-      width: 100%;
-      aspect-ratio: 9 / 16;
-      background: #000;
-      position: relative;
-      overflow: hidden;
-      border-radius: 9px;
-    }
-
-    .player-screen iframe,
-    .player-screen video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      object-fit: contain;
-    }
-
-    @media (min-width: 700px) {
-      #videos {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      main {
-        padding: 20px;
-      }
-    }
-  </style>
 </head>
 
 <body>
 
-  <header>
-    <div class="header-inner">
-      <div>
-        <div class="logo">JZ <span>PLAY</span></div>
-        <div class="tagline">Tempat menonton video hiburan</div>
-      </div>
-    </div>
-  </header>
+<header>
+  <div class="header-inner">
+    <div class="logo">JZ <span>PLAY</span></div>
+  </div>
+</header>
 
-  <main>
+<main>
 
-    <!-- BANNER ADSTERRA -->
-    <div class="ad-box">
-      <div id="container-d97c13de15c560f017d5d95845aa3c2b"></div>
-      <script
-        async="async"
-        data-cfasync="false"
-        src="https://bancadeltempoidea.org/21/d97c13de15c560f017d5d95845aa3c2b">
-      </script>
-    </div>
-
-    <!-- BANNER MONETAG -->
-    <div class="ad-box">
-      <script
-        src="https://quge5.com/88/tag.min.js"
-        data-zone="305426"
-        async
-        data-cfasync="false">
-      </script>
-    </div>
-
-    <div class="search-box">
-      <input
-        type="search"
-        id="searchInput"
-        placeholder="Cari video..."
-        autocomplete="off">
-    </div>
-
-    <h2 class="section-title">Video Terbaru</h2>
-
-    <div id="videos">
-      <div class="message">Memuat video...</div>
-    </div>
-
-    <div class="pagination" id="pagination"></div>
-
-    <div class="ad-box">
-      <!-- Slot iklan tambahan -->
-    </div>
-
-  </main>
-
-  <footer>
-    © 2026 JZ PLAY. All Rights Reserved.
-  </footer>
-
-  <!-- PEMUTAR VIDEO -->
-  <div id="player">
-    <div class="player-content">
-      <div class="player-top">
-        <div id="playerTitle">Memutar video</div>
-        <button id="closePlayer">Tutup ✕</button>
-      </div>
-      <div class="player-screen" id="playerScreen"></div>
-    </div>
+  <!-- ADSTERRA BANNER -->
+  <div class="banner">
+    <div id="container-d97c13de15c560f017d5d95845aa3c2b"></div>
+    <script async
+    src="https://bancadeltempoidea.org/21/d97c13de15c560f017d5d95845aa3c2b">
+    </script>
   </div>
 
-  <script>
-    // KONFIGURASI SUPABASE
-    const SUPABASE_URL =
-      "https://hinxtbzzavdnabtukaqw.supabase.co";
+  <input
+    type="search"
+    id="search"
+    class="search-box"
+    placeholder="Cari video..."
+  >
 
-    const SUPABASE_KEY =
-      "sb_publishable_2HTAulFHCy0L7ix7NQvLKw_W0BnuTM-";
+  <h2 class="section-title">Video Terbaru</h2>
 
-    const TABLE = "videos";
-    const PER_PAGE = 8;
+  <div id="videos">
+    <div class="empty">Memuat video...</div>
+  </div>
 
-    let allVideos = [];
-    let filteredVideos = [];
-    let currentPage = 1;
+  <div id="pagination" class="pagination"></div>
 
-    const videosContainer = document.getElementById("videos");
-    const pagination = document.getElementById("pagination");
-    const searchInput = document.getElementById("searchInput");
+</main>
 
-    function isDirectVideo(url) {
-      return /\.(mp4|webm|ogg|m4v)(\?.*)?$/i.test(url || "");
-    }
+<footer>
+  © 2026 JZ PLAY. All Rights Reserved.
+</footer>
 
-    function createElement(tag, className, text) {
-      const el = document.createElement(tag);
-      if (className) el.className = className;
-      if (text !== undefined) el.textContent = text;
-      return el;
-    }
+<div id="player">
+  <div class="player-top">
+    <button class="close-player" onclick="closePlayer()">
+      Tutup ✕
+    </button>
+  </div>
 
-    async function loadVideos() {
-      try {
-        const response = await fetch(
-          SUPABASE_URL +
-          "/rest/v1/videos?select=*&order=created_at.desc",
-          {
-            headers: {
-              apikey: SUPABASE_KEY,
-              Authorization: "Bearer " + SUPABASE_KEY
-            }
-          }
-        );
+  <div id="playerContent"></div>
+</div>
 
-        if (!response.ok) {
-          throw new Error("Gagal mengambil data video.");
+<script>
+/* PENGATURAN SUPABASE */
+const SUPABASE_URL =
+  "https://hinxtbzzavdnabtukaqw.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_2HTAulFHCy0L7ix7NQvLKw_W0BnuTM-";
+
+const TABLE = "videos";
+const PER_PAGE = 8;
+
+let allVideos = [];
+let filteredVideos = [];
+let currentPage = 1;
+
+
+/* MENGAMBIL DATA VIDEO */
+async function loadVideos() {
+  const container = document.getElementById("videos");
+
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/rest/v1/${TABLE}?select=*&order=created_at.desc`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
         }
-
-        allVideos = await response.json();
-        filteredVideos = allVideos;
-        renderVideos();
-
-      } catch (error) {
-        videosContainer.innerHTML = "";
-        videosContainer.appendChild(
-          createElement(
-            "div",
-            "message",
-            "Video gagal dimuat. Periksa koneksi atau pengaturan Supabase."
-          )
-        );
-        console.error(error);
       }
+    );
+
+    if (!response.ok) {
+      throw new Error("Gagal mengambil data video");
     }
 
-    function renderVideos() {
-      videosContainer.innerHTML = "";
-      pagination.innerHTML = "";
+    allVideos = await response.json();
+    filteredVideos = allVideos;
 
-      if (!filteredVideos.length) {
-        videosContainer.appendChild(
-          createElement("div", "message", "Video tidak ditemukan.")
-        );
-        return;
-      }
+    renderVideos();
 
-      const totalPages = Math.ceil(filteredVideos.length / PER_PAGE);
+  } catch (error) {
+    console.error(error);
+    container.innerHTML =
+      '<div class="empty">Video gagal dimuat. Periksa koneksi atau pengaturan Supabase.</div>';
+  }
+}
 
-      if (currentPage > totalPages) {
-        currentPage = totalPages;
-      }
 
-      const start = (currentPage - 1) * PER_PAGE;
-      const pageVideos = filteredVideos.slice(start, start + PER_PAGE);
+/* MEMERIKSA FORMAT VIDEO */
+function isDirectVideo(url) {
+  return /\.(mp4|webm|ogg|m4v)(\?.*)?$/i.test(url || "");
+}
 
-      pageVideos.forEach(video => {
-        const card = createElement("article", "video-card");
 
-        const frame = createElement("div", "video-frame");
-        const videoUrl = video.video_url || "";
+/* MENAMPILKAN VIDEO */
+function renderVideos() {
+  const container = document.getElementById("videos");
+  const pagination = document.getElementById("pagination");
 
-        if (isDirectVideo(videoUrl)) {
-          const videoElement = document.createElement("video");
-          videoElement.className = "inline-video";
-          videoElement.src = videoUrl;
-          videoElement.controls = true;
-          videoElement.playsInline = true;
-          videoElement.preload = "metadata";
-          frame.appendChild(videoElement);
-        } else {
-          const iframe = document.createElement("iframe");
-          iframe.className = "inline-embed";
-          iframe.src = videoUrl;
-          iframe.loading = "lazy";
-          iframe.allowFullscreen = true;
-          iframe.setAttribute(
-            "allow",
-            "autoplay; encrypted-media; picture-in-picture"
-          );
-          frame.appendChild(iframe);
-        }
+  container.innerHTML = "";
+  pagination.innerHTML = "";
 
-        const info = createElement("div", "video-info");
+  const totalPages = Math.ceil(
+    filteredVideos.length / PER_PAGE
+  );
 
-        const title = createElement(
-          "div",
-          "video-title",
-          video.title || "Tanpa judul"
-        );
+  if (!filteredVideos.length) {
+    container.innerHTML =
+      '<div class="empty">Video tidak ditemukan.</div>';
+    return;
+  }
 
-        const description = createElement(
-          "div",
-          "video-description",
-          video.description || ""
-        );
+  if (currentPage > totalPages) {
+    currentPage = totalPages;
+  }
 
-        const actions = createElement("div", "actions");
+  const start = (currentPage - 1) * PER_PAGE;
 
-        const watchButton = createElement(
-          "button",
-          "watch-btn",
-          "▶ Tonton"
-        );
+  const pageVideos = filteredVideos.slice(
+    start,
+    start + PER_PAGE
+  );
 
-        watchButton.type = "button";
-        watchButton.addEventListener("click", () => openVideo(video));
+  pageVideos.forEach(video => {
+    const card = document.createElement("article");
+    card.className = "video-card";
 
-        actions.appendChild(watchButton);
+    const title = document.createElement("div");
+    title.className = "video-title";
+    title.textContent = video.title || "Video tanpa judul";
 
-        if (video.download_url) {
-          const downloadButton = createElement(
-            "a",
-            "download-btn",
-            "⬇ Download"
-          );
+    const description = document.createElement("div");
+    description.className = "video-description";
+    description.textContent = video.description || "";
 
-          downloadButton.href = video.download_url;
-          downloadButton.target = "_blank";
-          downloadButton.rel = "noopener noreferrer";
-          actions.appendChild(downloadButton);
-        }
+    const frame = document.createElement("div");
+    frame.className = "video-frame";
 
-        info.appendChild(title);
+    if (isDirectVideo(video.video_url)) {
+      const videoElement = document.createElement("video");
 
-        if (video.description) {
-          info.appendChild(description);
-        }
+      videoElement.className = "inline-video";
+      videoElement.src = video.video_url;
+      videoElement.controls = true;
+      videoElement.playsInline = true;
+      videoElement.preload = "metadata";
 
-        info.appendChild(actions);
-        card.appendChild(frame);
-        card.appendChild(info);
-        videosContainer.appendChild(card);
-      });
+      frame.appendChild(videoElement);
 
-      renderPagination(totalPages);
+    } else if (video.video_url) {
+      const iframe = document.createElement("iframe");
+
+      iframe.className = "inline-embed";
+      iframe.src = video.video_url;
+      iframe.loading = "lazy";
+      iframe.allowFullscreen = true;
+      iframe.setAttribute(
+        "allow",
+        "autoplay; fullscreen; picture-in-picture"
+      );
+
+      frame.appendChild(iframe);
+
+    } else {
+      frame.innerHTML =
+        '<div class="empty">Video belum tersedia.</div>';
     }
 
-    function renderPagination(totalPages) {
-      if (totalPages <= 1) return;
+    const actions = document.createElement("div");
+    actions.className = "video-actions";
 
-      const previous = createElement("button", "", "‹");
-      previous.disabled = currentPage === 1;
-      previous.addEventListener("click", () => {
-        currentPage--;
-        renderVideos();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-      pagination.appendChild(previous);
+    const watchButton = document.createElement("button");
+    watchButton.className = "action-btn";
+    watchButton.textContent = "▶ Tonton";
+    watchButton.onclick = () => openVideo(video);
 
-      for (let page = 1; page <= totalPages; page++) {
-        const button = createElement("button", "", String(page));
+    actions.appendChild(watchButton);
 
-        if (page === currentPage) {
-          button.classList.add("active");
-        }
+    if (video.download_url) {
+      const downloadButton = document.createElement("a");
 
-        button.addEventListener("click", () => {
-          currentPage = page;
-          renderVideos();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        });
+      downloadButton.className =
+        "action-btn download-btn";
 
-        pagination.appendChild(button);
-      }
+      downloadButton.textContent = "⬇ Download";
+      downloadButton.href = video.download_url;
+      downloadButton.target = "_blank";
+      downloadButton.rel = "noopener noreferrer";
 
-      const next = createElement("button", "", "›");
-      next.disabled = currentPage === totalPages;
-      next.addEventListener("click", () => {
-        currentPage++;
-        renderVideos();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-      pagination.appendChild(next);
+      actions.appendChild(downloadButton);
     }
 
-    function openVideo(video) {
-      const player = document.getElementById("player");
-      const screen = document.getElementById("playerScreen");
+    card.appendChild(title);
 
-      document.getElementById("playerTitle").textContent =
-        video.title || "Memutar video";
-
-      screen.innerHTML = "";
-
-      if (isDirectVideo(video.video_url)) {
-        const videoElement = document.createElement("video");
-        videoElement.src = video.video_url;
-        videoElement.controls = true;
-        videoElement.autoplay = true;
-        videoElement.playsInline = true;
-        screen.appendChild(videoElement);
-      } else {
-        const iframe = document.createElement("iframe");
-        iframe.src = video.video_url;
-        iframe.allowFullscreen = true;
-        iframe.allow =
-          "autoplay; encrypted-media; picture-in-picture";
-        screen.appendChild(iframe);
-      }
-
-      player.classList.add("show");
+    if (video.description) {
+      card.appendChild(description);
     }
 
-    function closePlayer() {
-      document.getElementById("player").classList.remove("show");
-      document.getElementById("playerScreen").innerHTML = "";
-    }
+    card.appendChild(frame);
+    card.appendChild(actions);
 
-    document.getElementById("closePlayer")
-      .addEventListener("click", closePlayer);
+    container.appendChild(card);
+  });
 
-    document.getElementById("player")
-      .addEventListener("click", function(event) {
-        if (event.target === this) closePlayer();
-      });
 
-    searchInput.addEventListener("input", function() {
-      const keyword = this.value.toLowerCase().trim();
+  /* PAGINATION */
+  for (let i = 1; i <= totalPages; i++) {
+    const button = document.createElement("button");
 
-      filteredVideos = allVideos.filter(video => {
-        const title = (video.title || "").toLowerCase();
-        const description = (video.description || "").toLowerCase();
+    button.className =
+      "page-btn" + (i === currentPage ? " active" : "");
 
-        return title.includes(keyword) ||
-               description.includes(keyword);
-      });
+    button.textContent = i;
 
-      currentPage = 1;
+    button.onclick = () => {
+      currentPage = i;
       renderVideos();
-    });
 
-    loadVideos();
-  </script>
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    };
+
+    pagination.appendChild(button);
+  }
+}
+
+
+/* MEMBUKA PEMUTAR VIDEO */
+function openVideo(video) {
+  const player = document.getElementById("player");
+  const content = document.getElementById("playerContent");
+
+  content.innerHTML = "";
+
+  if (isDirectVideo(video.video_url)) {
+    const videoElement = document.createElement("video");
+
+    videoElement.src = video.video_url;
+    videoElement.controls = true;
+    videoElement.autoplay = true;
+    videoElement.playsInline = true;
+
+    content.appendChild(videoElement);
+
+  } else {
+    const iframe = document.createElement("iframe");
+
+    iframe.src = video.video_url;
+    iframe.allowFullscreen = true;
+    iframe.allow =
+      "autoplay; fullscreen; picture-in-picture";
+
+    content.appendChild(iframe);
+  }
+
+  player.classList.add("show");
+}
+
+
+/* MENUTUP PEMUTAR */
+function closePlayer() {
+  const player = document.getElementById("player");
+  const content = document.getElementById("playerContent");
+
+  player.classList.remove("show");
+  content.innerHTML = "";
+}
+
+
+/* PENCARIAN */
+document.getElementById("search")
+.addEventListener("input", function() {
+
+  const keyword = this.value.toLowerCase().trim();
+
+  filteredVideos = allVideos.filter(video =>
+    (video.title || "").toLowerCase().includes(keyword) ||
+    (video.description || "").toLowerCase().includes(keyword)
+  );
+
+  currentPage = 1;
+  renderVideos();
+});
+
+
+/* MULAI WEBSITE */
+loadVideos();
+</script>
 
 </body>
-  </html>
-  
+</html>
